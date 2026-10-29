@@ -43,6 +43,7 @@ def description_of_items(item, weapon_stats, potion_effects):
           "\n*Ok")
 
     accept()
+    return
 
 # todo def world(dataplayer,weapon_stats):
 
@@ -173,6 +174,7 @@ def store(dataplayer):
 
             elif choose == "e":
                 description_of_items(commodity[position],weapon_stats, potion_effects)
+                time.sleep(0.1)
 
             elif choose == "enter":
         
@@ -199,7 +201,8 @@ def store(dataplayer):
                     print(f"its price is {price} rublons, do you really want buy {commodity[position]}?         rublons:{dataplayer["rublons"]}" 
                         "\n(press \"E\" to see the attributes)\n" \
                         f"{brandL}yes       {brandR}no") 
-            
+
+                    time.sleep(0.2)           
                     key = keyboard.read_key().lower()
 
                     if key == "flecha derecha":
@@ -210,18 +213,20 @@ def store(dataplayer):
                         brandR = ""
                         brandL = "*"
 
+                    elif key == "e":
+                        description_of_items(commodity[position],weapon_stats, potion_effects)
+                        time.sleep(0.1)
+                    
                     elif key == "enter" and brandR == "*":
                         break
 
-                    elif key == "e":
-                        description_of_items(commodity[position],weapon_stats, potion_effects)
-                        time.sleep(0.5)
-
                     elif key == "enter" and brandL == "*":
+                        print("\x1b[10A\r\x1b[J", end="")
+                        time.sleep(0.2)
                         if dataplayer["rublons"] >= price: 
                             dataplayer["rublons"] -= price
                             
-                            if commodity[position] in weapon_stats:
+                            if commodity[position] in weapon_stats["long_range"] or commodity[position] in weapon_stats["low_range"]:
                                 dataplayer["weapons"].append(commodity[position])
 
                             else:
@@ -229,13 +234,11 @@ def store(dataplayer):
                             
                             print("x1b[10A\r\x1b[J", end="")
                             print("your item has been purchase✅​\n*ok")
-                            time.sleep(0.2)
                             accept() 
 
                         else:
                             print("x1b[10A\r\x1b[J", end="")
                             print("you dont have enough rublons for buy this item, you are an egg mother\n*ok ")
-                            time.sleep(0.2)
                             accept()
                             
 def start(data0,dataplayer):
