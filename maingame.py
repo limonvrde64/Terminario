@@ -56,7 +56,8 @@ def store(dataplayer):
                                    {"pasive_damage":19,
                                     "skill1":"fireboll",
                                     "skill2":"psychological poison",
-                                    "skill3":"mana recharge"}
+                                    "skill3":"mana recharge",
+                                    "price":99}
                                    },
                     },
                      "low_range": {
@@ -64,46 +65,53 @@ def store(dataplayer):
                                {"pasive_damage":30,
                                 "skill1":"impotent stab",
                                 "skill2":"none",
-                                "skill3":"none"}
+                                "skill3":"none",
+                                "price":33}
                                },
                      "Killdragons sword": {"damage":
                                            {"pasive_damage":499,
                                             "skill1":"bisectional disjunction",
                                             "skill2":"isomeric compression",
-                                            "skill3":"non-euclidean severance"}
+                                            "skill3":"non-euclidean severance",
+                                            "price":4999}
                                           },
                      "Leaf": {"damage":
                               {"pasive_damage":5,
                                "skill1":"none",
                                "skill2":"none",
-                               "skill3":"none"}
+                               "skill3":"none",
+                               "price":1}
                                },
                      "Little pencil": {"damage":
                                        {"pasive_damage":2,
                                         "skill1":"none",
                                         "skill2":"none",
-                                        "skill3":"none"}
+                                        "skill3":"none",
+                                        "price":0}
                                      }}}
     
     potion_effects = {"health potions": {
                      "Small healing potion": {"effects": 
                                               {"health_boost":300,
-                                              "skill1": "potion sickness 1",
-                                              "skill2": "none",
-                                              "skill3": "none"}
+                                              "skill1":"potion sickness 1",
+                                              "skill2":"none",
+                                              "skill3":"none",
+                                              "price":10}
                                               },
                                               
                      "Medium healing potion": {"effects":
                                               {"health_boost":600,
-                                               "skill1": "potion sickness 2",
-                                               "skill2": "none",
-                                               "skill3": "none"}
+                                               "skill1":"potion sickness 2",
+                                               "skill2":"none",
+                                               "skill3":"none",
+                                               "price":25}
                                               },
                      "Big healing potion": {"effects":
                                            {"health_boost":1000,
-                                            "skill1": "potion sickness 3",
-                                            "skill2": "none",
-                                            "skill3": "none"}
+                                            "skill1":"potion sickness 3",
+                                            "skill2":"none",
+                                            "skill3":"none",
+                                            "price":40}
                                             }}}
     # ? potion_efects = {aqui falta codeo para establecer el funcionamiento de las pociones}
 
@@ -114,7 +122,7 @@ def store(dataplayer):
         "Spoon",
         "Killdragons sword",
         "Leaf",
-        "Small healing potion"
+        "Small healing potion",
         "Little pencil"
         ]
         
@@ -127,10 +135,9 @@ def store(dataplayer):
         brands = [brand0,brand1,brand2,brand3,brand4,brand5]
         position = 0
         
-        for d in range(len(commodity)):
-            if commodity[d] in dataplayer["weapons"]:
-                del commodity[d]
-                del brands[d]
+        for d in commodity:
+            if d in dataplayer["weapons"]:
+                d = "not available"
         
         time.sleep(0.1)
         while True:
@@ -144,7 +151,7 @@ def store(dataplayer):
             print(f"hello {dataplayer["name"]} this is the store")
             print( "¡¡¡please, choose your purchase!!!, or else press Esc for go to the main menu...\n" \
                   f"{brands[0]}[{commodity[0]}]  {brands[1]}[{commodity[1]}]  {brands[2]}[{commodity[2]}]\n" \
-                  f"{brands[3]}[{commodity[3]}]  {brands[4]}[{commodity[4]}]")
+                  f"{brands[3]}[{commodity[3]}]  {brands[4]}[{commodity[4]}]  {brands[5]}[{commodity[5]}]")
 
             time.sleep(0.2)
             choose = keyboard.read_key()
@@ -156,10 +163,10 @@ def store(dataplayer):
                 if position != 0:
                     position -= 1
                 else:
-                    position = 4
+                    position = 5
 
             elif choose == "flecha derecha":
-                if position != 4:
+                if position != 5:
                     position += 1
                 else:
                     position = 0
@@ -177,7 +184,8 @@ def store(dataplayer):
                 time.sleep(0.1)
 
             elif choose == "enter":
-        
+        #resumen para miguel del futuro: decidi que el precio de las armas iba a ser un valor estatico en todas las tiendas
+        #del mardito juego y que las tiendas le iban a subir o bajar porcentualmente el precio base a las marditas cosas
                 if commodity[position] == "Killdragons sword":
                     price = 4999
 
@@ -259,7 +267,7 @@ def start(data0,dataplayer):
                 dataplayer = { 
                     "name":name,
                     "skin":skin,
-                    "weapons":["little pencil"],
+                    "weapons":["Little pencil"],
                     "potions":[],
                     "rublons":0
                     }
