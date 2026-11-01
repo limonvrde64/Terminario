@@ -2,10 +2,27 @@ import random
 import keyboard
 import time
 import os
-data0 = True
-# * data0 significa de que no hay informacion acerca del jugador
-os.system("cls")
+import json
 
+
+
+def get_data(namedatafile):
+    with open(namedatafile, "r") as file:
+        namedata = (json.load(file))
+    
+    return namedata
+
+def save_data(namedatafile, savedata):
+    with open(namedatafile, "w") as file:
+        json.dump(savedata, file)
+    
+    return
+
+def reprice(weapon_stats, potion_effects):
+    #aqui falta la logica de como los tienderos van a cambiar el precio de las armas
+    #segun las condiciones
+    return
+    
 def accept():
     while True:
         confirt = keyboard.read_key().lower()
@@ -13,25 +30,25 @@ def accept():
         if confirt == "enter":
             return
 
-def description_of_items(item, weapon_stats, potion_effects):
+def description_of_items(item, items):
     
     print("\x1b[10A\r\x1b[J", end="")
     
-    if item in weapon_stats["long_range"]:
-        diccionary = weapon_stats
+    if item in items["weapon_stats"]["long_range"]:
+        diccionary = items["weapon_stats"]
         category2 = "damage"
         category3 = "pasive_damage"
         category = "long_range"
 
-    elif item in weapon_stats["low_range"]:
-        diccionary = weapon_stats
+    elif item in items["weapon_stats"]["low_range"]:
+        diccionary = items["weapon_stats"]
         category2 = "damage"
         category3 = "pasive_damage"
         category = "low_range"
         
     else:
-        if item in potion_effects["health potions"]:
-            diccionary = potion_effects
+        if item in items["potion_effects"]["health potions"]:
+            diccionary = items["potion_effects"]
             category = "health potions"
             category2 = "effects"
             category3 = "health_boost"
@@ -49,9 +66,10 @@ def description_of_items(item, weapon_stats, potion_effects):
 
     # ? falta desarrollo
 
-def store(dataplayer):
-    
-    weapon_stats = {"long_range": {
+def main_store(dataplayer):
+
+    items = {
+    "weapon_stats": {"long_range": {
                      "Baby staff": {"damage":
                                    {"pasive_damage":19,
                                     "skill1":"fireboll",
@@ -88,9 +106,9 @@ def store(dataplayer):
                                         "skill2":"none",
                                         "skill3":"none",
                                         "price":0}
-                                     }}}
+                                     }}},
     
-    potion_effects = {"health potions": {
+    "potion_effects": {"health potions": {
                      "Small healing potion": {"effects": 
                                               {"health_boost":300,
                                               "skill1":"potion sickness 1",
@@ -113,7 +131,7 @@ def store(dataplayer):
                                             "skill3":"none",
                                             "price":40}
                                             }}}
-    # ? potion_efects = {aqui falta codeo para establecer el funcionamiento de las pociones}
+                                            }
 
     while True:
         
@@ -180,12 +198,13 @@ def store(dataplayer):
                     position = 3
 
             elif choose == "e":
-                description_of_items(commodity[position],weapon_stats, potion_effects)
+                description_of_items(commodity[position],items)
                 time.sleep(0.1)
 
             elif choose == "enter":
         #resumen para miguel del futuro: decidi que el precio de las armas iba a ser un valor estatico en todas las tiendas
-        #del mardito juego y que las tiendas le iban a subir o bajar porcentualmente el precio base a las marditas cosas
+        #del mardito juego y que las tiendas le iban a subir o bajar porcentualmente el precio base a las marditas cosas, tambien 
+        #que todas las armas de el juego iban a estar en weapon_stats y potion_effects
                 if commodity[position] == "Killdragons sword":
                     price = 4999
 
@@ -222,7 +241,7 @@ def store(dataplayer):
                         brandL = "*"
 
                     elif key == "e":
-                        description_of_items(commodity[position],weapon_stats, potion_effects)
+                        description_of_items(commodity[position],items)
                         time.sleep(0.1)
                     
                     elif key == "enter" and brandR == "*":
@@ -234,7 +253,7 @@ def store(dataplayer):
                         if dataplayer["rublons"] >= price: 
                             dataplayer["rublons"] -= price
                             
-                            if commodity[position] in weapon_stats["long_range"] or commodity[position] in weapon_stats["low_range"]:
+                            if commodity[position] in items["weapon_stats"]["long_range"] or commodity[position] in items["weapon_stats"]["low_range"]:
                                 dataplayer["weapons"].append(commodity[position])
 
                             else:
@@ -249,11 +268,80 @@ def store(dataplayer):
                             print("you dont have enough rublons for buy this item, you are an egg mother\n*ok ")
                             accept()
                             
-def start(data0,dataplayer):
-    if data0:
+def start():
+    os.system("cls")
+    if not os.path.exists("items.json"):
+
+        items = {
+        "weapon_stats": {"long_range": {
+                         "Baby staff": {"damage":
+                                       {"pasive_damage":19,
+                                        "skill1":"fireboll",
+                                        "skill2":"psychological poison",
+                                        "skill3":"mana recharge",
+                                        "price":99}
+                                       },
+                        },
+                         "low_range": {
+                         "Spoon": {"damage":
+                                   {"pasive_damage":30,
+                                    "skill1":"impotent stab",
+                                    "skill2":"none",
+                                    "skill3":"none",
+                                    "price":33}
+                                   },
+                         "Killdragons sword": {"damage":
+                                               {"pasive_damage":499,
+                                                "skill1":"bisectional disjunction",
+                                                "skill2":"isomeric compression",
+                                                "skill3":"non-euclidean severance",
+                                                "price":4999}
+                                              },
+                         "Leaf": {"damage":
+                                  {"pasive_damage":5,
+                                   "skill1":"none",
+                                   "skill2":"none",
+                                   "skill3":"none",
+                                   "price":1}
+                                   },
+                         "Little pencil": {"damage":
+                                           {"pasive_damage":2,
+                                            "skill1":"none",
+                                            "skill2":"none",
+                                            "skill3":"none",
+                                            "price":0}
+                                         }}},
         
+        "potion_effects": {"health potions": {
+                         "Small healing potion": {"effects": 
+                                                  {"health_boost":300,
+                                                  "skill1":"potion sickness 1",
+                                                  "skill2":"none",
+                                                  "skill3":"none",
+                                                  "price":10}
+                                                  },
+                                                  
+                         "Medium healing potion": {"effects":
+                                                  {"health_boost":600,
+                                                   "skill1":"potion sickness 2",
+                                                   "skill2":"none",
+                                                   "skill3":"none",
+                                                   "price":25}
+                                                  },
+                         "Big healing potion": {"effects":
+                                               {"health_boost":1000,
+                                                "skill1":"potion sickness 3",
+                                                "skill2":"none",
+                                                "skill3":"none",
+                                                "price":40}
+                                                }}}
+                                                }
+        save_data(namedatafile="items.json",savedata=items)
+
+    #if data0:
+    if not os.path.exists("dataplayer.json"):
+
         name = input("¡¡welcome player!!, please write your name and press ENTER\n")
-        
         print("\x1b[10A\r\x1b[J", end="")
         skin = input("\r!!ok, now, choose a letter or number for your skin¡¡        \n")
                                                                                          
@@ -272,6 +360,7 @@ def start(data0,dataplayer):
                     "rublons":0
                     }
                 break 
+        save_data(namedatafile="dataplayer.json",savedata=dataplayer)
     
     brandL = "*"
     brandR = ""
@@ -292,12 +381,12 @@ def start(data0,dataplayer):
             brandR = ""
 
         elif action == "enter" and brandL == "*":
-            store(dataplayer)
+            main_store(dataplayer)
             
         # * elif action == "enter" and brandR == "*":
             # ? aqui falta la funcion que ejecute el juego principal
 
-start(data0,None)
+start()
 
 
                
