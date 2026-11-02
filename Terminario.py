@@ -4,6 +4,7 @@ import time
 import os
 import json
 from game_data import items, check_dataplayerjson_exist
+dataplayer = check_dataplayerjson_exist()
 
 def get_data(namedatafile):
     with open(namedatafile, "r") as file:
@@ -15,7 +16,6 @@ def save_data(namedatafile, savedata):
         json.dump(savedata, file)
     return
 
-dataplayer = get_data("dataplayer.json")
 #funciones que no importan mucho
 #---------------------------------------------------------------------------------------
 def reprice(weapon_stats, potion_effects):
@@ -38,12 +38,14 @@ def description_of_items(item, items):
         category2 = "damage"
         category3 = "pasive_damage"
         category = "long_range"
+        effect = "Pasive damage"
 
     elif item in items["weapon_stats"]["low_range"]:
         diccionary = items["weapon_stats"]
         category2 = "damage"
         category3 = "pasive_damage"
         category = "low_range"
+        effect = "Pasive damage"
         
     else:
         if item in items["potion_effects"]["health potions"]:
@@ -51,8 +53,9 @@ def description_of_items(item, items):
             category = "health potions"
             category2 = "effects"
             category3 = "health_boost"
+            effect = "Health boost"
                                  
-    print(f"Pasive Damage: {diccionary[category][item][category2][category3]}" \
+    print(f"{effect}: {diccionary[category][item][category2][category3]}" \
           f"\nSkill N1: {diccionary[category][item][category2]["skill1"]}" \
           f"\nSkill N2: {diccionary[category][item][category2]["skill2"]}" \
           f"\nSkill N3: {diccionary[category][item][category2]["skill3"]}" \

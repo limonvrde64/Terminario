@@ -14,6 +14,9 @@ def get_data(namedatafile):
 #--------------------------------------------------------------------------------------
 def check_dataplayerjson_exist():
     DP_file = "dataplayer.json"
+    if os.path.exists(DP_file):
+        dataplayer = get_data(namedatafile=DP_file)
+        
     if not os.path.exists(DP_file):
 
         name = input("¡¡welcome player!!, please write your name and press ENTER\n")
@@ -35,8 +38,8 @@ def check_dataplayerjson_exist():
                     "rublons":0
                     }
                 break 
-    return 
-check_dataplayerjson_exist()
+    return dataplayer
+
 #----------------------------------------------------------------------------------------
 #datos de los items del juegooooo
 #----------------------------------------------------------------------------------------
