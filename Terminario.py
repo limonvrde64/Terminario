@@ -141,20 +141,12 @@ def main_store(dataplayer, items):
         #del mardito juego y que las tiendas le iban a subir o bajar porcentualmente el precio base a las marditas cosas, tambien 
         #que todas las armas de el juego iban a estar en weapon_stats y potion_effects
  #----------------------------------------------------------------------------------------------------
-                if commodity[position] == "Killdragons sword":
-                    price = 4999
-
-                elif commodity[position] == "Baby staff":
-                    price = 99
-
-                elif commodity[position] == "Spoon":
-                    price = 30
-
-                elif commodity[position] == "Leaf":
-                    price = 1
-
-                elif commodity[position] == "Small healing potion":
-                    price = 10
+                if commodity[position] in items["weapon_stats"]["long_range"]:
+                    price = items["weapon_stats"]["long_range"][commodity[position]]["attributes"]["price"]
+                elif commodity[position] in items["weapon_stats"]["low_range"]:
+                    price = items["weapon_stats"]["low_range"][commodity[position]]["attributes"]["price"]
+                elif commodity[position] in items["potion_effects"]["health potions"]:
+                    price = items["potion_effects"]["health potions"][commodity[position]]["attributes"]["price"]
 #---------------------------------------------------------------------------------------------------
                 time.sleep(0.2)
                 brandL = "*"
