@@ -35,74 +35,87 @@ def check_dataplayerjson_exist():
                     "rublons":0
                     }
                 break 
-    save_data(namedatafile=DP_file,savedata=dataplayer)
     return 
 check_dataplayerjson_exist()
 #----------------------------------------------------------------------------------------
 #datos de los items del juegooooo
 #----------------------------------------------------------------------------------------
 items = {
-        "weapon_stats": {"long_range": {
-                         "Baby staff": {"damage":
-                                       {"pasive_damage":19,
-                                        "skill1":"fireboll",
-                                        "skill2":"psychological poison",
-                                        "skill3":"mana recharge",
-                                        "price":99}
-                                       },
-                        },
-                         "low_range": {
-                         "Spoon": {"damage":
-                                   {"pasive_damage":30,
-                                    "skill1":"impotent stab",
-                                    "skill2":"none",
-                                    "skill3":"none",
-                                    "price":33}
-                                   },
-                         "Killdragons sword": {"damage":
-                                               {"pasive_damage":499,
-                                                "skill1":"bisectional disjunction",
-                                                "skill2":"isomeric compression",
-                                                "skill3":"non-euclidean severance",
-                                                "price":4999}
-                                              },
-                         "Leaf": {"damage":
-                                  {"pasive_damage":5,
-                                   "skill1":"none",
-                                   "skill2":"none",
-                                   "skill3":"none",
-                                   "price":1}
-                                   },
-                         "Little pencil": {"damage":
-                                           {"pasive_damage":2,
-                                            "skill1":"none",
-                                            "skill2":"none",
-                                            "skill3":"none",
-                                            "price":0}
-                                         }}},
-        
-        "potion_effects": {"health potions": {
-                         "Small healing potion": {"effects": 
-                                                  {"health_boost":300,
-                                                  "skill1":"potion sickness 1",
-                                                  "skill2":"none",
-                                                  "skill3":"none",
-                                                  "price":10}
-                                                  },
-                                                  
-                         "Medium healing potion": {"effects":
-                                                  {"health_boost":600,
-                                                   "skill1":"potion sickness 2",
-                                                   "skill2":"none",
-                                                   "skill3":"none",
-                                                   "price":25}
-                                                  },
-                         "Big healing potion": {"effects":
-                                               {"health_boost":1000,
-                                                "skill1":"potion sickness 3",
-                                                "skill2":"none",
-                                                "skill3":"none",
-                                                "price":40}
-                                                }}}
-                                                }
+    "weapon_stats": {
+        "long_range": {
+            "Baby staff": {
+                "damage": {
+                    "pasive_damage": 19,
+                    "skill1": "fireboll",
+                    "skill2": "psychological poison",
+                    "skill3": "mana recharge",
+                },
+                "attributes": {"price": 99},
+            }},
+        "low_range": {
+            "Spoon": {
+                "damage": {
+                    "pasive_damage": 30,
+                    "skill1": "impotent stab",
+                    "skill2": "none",
+                    "skill3": "none",
+                },
+                "attributes": {"price": 33},
+            },
+            "Killdragons sword": {
+                "damage": {
+                    "pasive_damage": 499,
+                    "skill1": "bisectional disjunction",
+                    "skill2": "isomeric compression",
+                    "skill3": "non-euclidean severance",
+                },
+                "attributes": {"price": 4999},
+            },
+            "Leaf": {
+                "damage": {
+                    "pasive_damage": 5,
+                    "skill1": "none",
+                    "skill2": "none",
+                    "skill3": "none",
+                },
+                "attributes": {"price": 1},
+            },
+            "Little pencil": {
+                "damage": {
+                    "pasive_damage": 2,
+                    "skill1": "none",
+                    "skill2": "none",
+                    "skill3": "none",
+                },
+                "attributes": {"price": 0},
+            },},},
+    "potion_effects": {
+        "health potions": {
+            "Small healing potion": {
+                "effects": {
+                    "health_boost": 300,
+                    "skill1": "potion sickness 1",
+                    "skill2": "none",
+                    "skill3": "none",
+                },
+                "attributes": {"price": 10},
+            },
+            "Medium healing potion": {
+                "effects": {
+                    "health_boost": 600,
+                    "skill1": "potion sickness 2",
+                    "skill2": "none",
+                    "skill3": "none",
+                },
+                "attributes": {"price": 25},
+            },
+            "Big healing potion": {
+                "effects": {
+                    "health_boost": 1000,
+                    "skill1": "potion sickness 3",
+                    "skill2": "none",
+                    "skill3": "none",
+                },
+                "attributes": {"price": 40},
+            },}},}
 #------------------------------------------------------------------------------------
