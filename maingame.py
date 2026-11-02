@@ -3,24 +3,24 @@ import keyboard
 import time
 import os
 import json
-
-
+from game_data import items, check_dataplayerjson_exist
 
 def get_data(namedatafile):
     with open(namedatafile, "r") as file:
         namedata = (json.load(file))
-    
     return namedata
 
 def save_data(namedatafile, savedata):
     with open(namedatafile, "w") as file:
         json.dump(savedata, file)
-    
     return
 
+dataplayer = get_data("dataplayer.json")
+#funciones que no importan mucho
+#---------------------------------------------------------------------------------------
 def reprice(weapon_stats, potion_effects):
     #aqui falta la logica de como los tienderos van a cambiar el precio de las armas
-    #segun las condiciones
+    #segun las tiendas
     return
     
 def accept():
@@ -29,9 +29,8 @@ def accept():
     
         if confirt == "enter":
             return
-
+#----------------------------------------------------------------------------------------
 def description_of_items(item, items):
-    
     print("\x1b[10A\r\x1b[J", end="")
     
     if item in items["weapon_stats"]["long_range"]:
@@ -66,72 +65,7 @@ def description_of_items(item, items):
 
     # ? falta desarrollo
 
-def main_store(dataplayer):
-
-    items = {
-    "weapon_stats": {"long_range": {
-                     "Baby staff": {"damage":
-                                   {"pasive_damage":19,
-                                    "skill1":"fireboll",
-                                    "skill2":"psychological poison",
-                                    "skill3":"mana recharge",
-                                    "price":99}
-                                   },
-                    },
-                     "low_range": {
-                     "Spoon": {"damage":
-                               {"pasive_damage":30,
-                                "skill1":"impotent stab",
-                                "skill2":"none",
-                                "skill3":"none",
-                                "price":33}
-                               },
-                     "Killdragons sword": {"damage":
-                                           {"pasive_damage":499,
-                                            "skill1":"bisectional disjunction",
-                                            "skill2":"isomeric compression",
-                                            "skill3":"non-euclidean severance",
-                                            "price":4999}
-                                          },
-                     "Leaf": {"damage":
-                              {"pasive_damage":5,
-                               "skill1":"none",
-                               "skill2":"none",
-                               "skill3":"none",
-                               "price":1}
-                               },
-                     "Little pencil": {"damage":
-                                       {"pasive_damage":2,
-                                        "skill1":"none",
-                                        "skill2":"none",
-                                        "skill3":"none",
-                                        "price":0}
-                                     }}},
-    
-    "potion_effects": {"health potions": {
-                     "Small healing potion": {"effects": 
-                                              {"health_boost":300,
-                                              "skill1":"potion sickness 1",
-                                              "skill2":"none",
-                                              "skill3":"none",
-                                              "price":10}
-                                              },
-                                              
-                     "Medium healing potion": {"effects":
-                                              {"health_boost":600,
-                                               "skill1":"potion sickness 2",
-                                               "skill2":"none",
-                                               "skill3":"none",
-                                               "price":25}
-                                              },
-                     "Big healing potion": {"effects":
-                                           {"health_boost":1000,
-                                            "skill1":"potion sickness 3",
-                                            "skill2":"none",
-                                            "skill3":"none",
-                                            "price":40}
-                                            }}}
-                                            }
+def main_store(dataplayer, items):
 
     while True:
         
@@ -153,12 +87,13 @@ def main_store(dataplayer):
         brands = [brand0,brand1,brand2,brand3,brand4,brand5]
         position = 0
         
-        for d in commodity:
-            if d in dataplayer["weapons"]:
-                d = "not available"
-        
         time.sleep(0.1)
         while True:
+            
+            for d in commodity:
+                if d in dataplayer["weapons"]:
+                    d = "not available"
+            
             for index, brand in enumerate(brands):
                 brands[index] = ""
                 if index == position:
@@ -205,6 +140,7 @@ def main_store(dataplayer):
         #resumen para miguel del futuro: decidi que el precio de las armas iba a ser un valor estatico en todas las tiendas
         #del mardito juego y que las tiendas le iban a subir o bajar porcentualmente el precio base a las marditas cosas, tambien 
         #que todas las armas de el juego iban a estar en weapon_stats y potion_effects
+ #----------------------------------------------------------------------------------------------------
                 if commodity[position] == "Killdragons sword":
                     price = 4999
 
@@ -219,7 +155,7 @@ def main_store(dataplayer):
 
                 elif commodity[position] == "Small healing potion":
                     price = 10
-
+#---------------------------------------------------------------------------------------------------
                 time.sleep(0.2)
                 brandL = "*"
                 brandR = ""
@@ -227,7 +163,7 @@ def main_store(dataplayer):
                     print("\x1b[10A\r\x1b[J", end="")
                     print(f"its price is {price} rublons, do you really want buy {commodity[position]}?         rublons:{dataplayer["rublons"]}" 
                         "\n(press \"E\" to see the attributes)\n" \
-                        f"{brandL}yes       {brandR}no") 
+                        f"{brandL}yes  {brandR}no") 
 
                     time.sleep(0.2)           
                     key = keyboard.read_key().lower()
@@ -268,125 +204,56 @@ def main_store(dataplayer):
                             print("you dont have enough rublons for buy this item, you are an egg mother\n*ok ")
                             accept()
                             
-def start():
+def start(dataplayer,items):
+
     os.system("cls")
-    if not os.path.exists("items.json"):
 
-        items = {
-        "weapon_stats": {"long_range": {
-                         "Baby staff": {"damage":
-                                       {"pasive_damage":19,
-                                        "skill1":"fireboll",
-                                        "skill2":"psychological poison",
-                                        "skill3":"mana recharge",
-                                        "price":99}
-                                       },
-                        },
-                         "low_range": {
-                         "Spoon": {"damage":
-                                   {"pasive_damage":30,
-                                    "skill1":"impotent stab",
-                                    "skill2":"none",
-                                    "skill3":"none",
-                                    "price":33}
-                                   },
-                         "Killdragons sword": {"damage":
-                                               {"pasive_damage":499,
-                                                "skill1":"bisectional disjunction",
-                                                "skill2":"isomeric compression",
-                                                "skill3":"non-euclidean severance",
-                                                "price":4999}
-                                              },
-                         "Leaf": {"damage":
-                                  {"pasive_damage":5,
-                                   "skill1":"none",
-                                   "skill2":"none",
-                                   "skill3":"none",
-                                   "price":1}
-                                   },
-                         "Little pencil": {"damage":
-                                           {"pasive_damage":2,
-                                            "skill1":"none",
-                                            "skill2":"none",
-                                            "skill3":"none",
-                                            "price":0}
-                                         }}},
-        
-        "potion_effects": {"health potions": {
-                         "Small healing potion": {"effects": 
-                                                  {"health_boost":300,
-                                                  "skill1":"potion sickness 1",
-                                                  "skill2":"none",
-                                                  "skill3":"none",
-                                                  "price":10}
-                                                  },
-                                                  
-                         "Medium healing potion": {"effects":
-                                                  {"health_boost":600,
-                                                   "skill1":"potion sickness 2",
-                                                   "skill2":"none",
-                                                   "skill3":"none",
-                                                   "price":25}
-                                                  },
-                         "Big healing potion": {"effects":
-                                               {"health_boost":1000,
-                                                "skill1":"potion sickness 3",
-                                                "skill2":"none",
-                                                "skill3":"none",
-                                                "price":40}
-                                                }}}
-                                                }
-        save_data(namedatafile="items.json",savedata=items)
-
-    #if data0:
-    if not os.path.exists("dataplayer.json"):
-
-        name = input("¡¡welcome player!!, please write your name and press ENTER\n")
-        print("\x1b[10A\r\x1b[J", end="")
-        skin = input("\r!!ok, now, choose a letter or number for your skin¡¡        \n")
-                                                                                         
-        while True:
-
-            if len(skin) != 1:
-                print("\x1b[10A\r\x1b[J", end="")
-                skin = input("insert a only character... try again.\n")
-
-            else:
-                dataplayer = { 
-                    "name":name,
-                    "skin":skin,
-                    "weapons":["Little pencil"],
-                    "potions":[],
-                    "rublons":0
-                    }
-                break 
-        save_data(namedatafile="dataplayer.json",savedata=dataplayer)
+    position = 0
+    brand0 = "*"
+    brand1 = ""
+    brand2 = ""
+    brand3 = ""
+    brands = [brand0, brand1, brand2, brand3]
     
-    brandL = "*"
-    brandR = ""
     while True:        
-
+        for index, brand in enumerate(brands):
+            brands[index] = ""
+            if index == position:
+                m_ind = index
+        brands[m_ind] = "*"
+        
         print("\x1b[10A\r\x1b[J", end="")
-        print(f"this is the menu, !!you can go to the store or play the game¡¡\n{brandL}store        {brandR}play")
+        print(f"this is the main menu, you can go to the store, play the game, save your game or load your games!!"\
+              f"\n{brands[0]}[store]  {brands[1]}[play]  {brands[2]}[save]  {brands[3]}[load]") 
           
-        time.sleep(0.1)
+        time.sleep(0.2)
         action = keyboard.read_key()
    
         if action == "flecha derecha":
-            brandL = ""
-            brandR = "*"
+            if position == 3:
+                position = 0
+            else:
+                position += 1
 
         elif action == "flecha izquierda":
-            brandL = "*"
-            brandR = ""
+            if position == 0:
+                position = 3
+            else:
+                position -= 1
 
-        elif action == "enter" and brandL == "*":
-            main_store(dataplayer)
+        elif action == "enter" and position == 0:
+            main_store(dataplayer = dataplayer, items=items)
             
-        # * elif action == "enter" and brandR == "*":
+        # * elif action == "enter" and position == 1:
             # ? aqui falta la funcion que ejecute el juego principal
 
-start()
+        elif action == "enter" and position == 2:
+            save_data(namedatafile="dataplayer.json",savedata=dataplayer)
+
+        #elif action == "enter" and position == 3:
+            #como el programa va a usar los archivos de partidas guardadas por el jugador
+
+start(dataplayer=dataplayer, items=items)
 
 
                
