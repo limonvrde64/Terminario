@@ -12,9 +12,11 @@ def get_data(namedatafile):
     return namedata
 #aqui se ve si esta el archivo con la informacion del jugador en el sistema, sino, la crea 
 #--------------------------------------------------------------------------------------
-def check_dataplayerjson_exist():
-    DP_file = "dataplayer.json"
-    if os.path.exists(DP_file):
+def check_dataplayerjson(name_game):
+    #decidi que el archivo predeterminado de inicio sera dado por un numero al principio (un mardito 0)
+    
+    DP_file = "./saved_games_f/0*.json"
+    if "./saved_games_f/*.json".exists():
         dataplayer = get_data(namedatafile=DP_file)
         
     if not os.path.exists(DP_file):

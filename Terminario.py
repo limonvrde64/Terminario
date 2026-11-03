@@ -3,8 +3,8 @@ import keyboard
 import time
 import os
 import json
-from game_data import items, check_dataplayerjson_exist
-dataplayer = check_dataplayerjson_exist()
+from game_data import items, check_dataplayerjson
+dataplayer = check_dataplayerjson()
 
 def get_data(namedatafile):
     with open(namedatafile, "r") as file:
@@ -245,7 +245,8 @@ def start(dataplayer,items):
         elif action == "enter" and position == 2:
             save_data(namedatafile="dataplayer.json",savedata=dataplayer)
 
-        #elif action == "enter" and position == 3:
+        elif action == "enter" and position == 3:
+            check_dataplayerjson()
             #como el programa va a usar los archivos de partidas guardadas por el jugador
 
 start(dataplayer=dataplayer, items=items)
