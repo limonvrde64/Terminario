@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 
 def save_data(namedatafile, savedata):
     with open(namedatafile, "w") as file:
@@ -12,14 +13,13 @@ def get_data(namedatafile):
     return namedata
 #aqui se ve si esta el archivo con la informacion del jugador en el sistema, sino, la crea 
 #--------------------------------------------------------------------------------------
-def check_dataplayerjson(name_game):
-    #decidi que el archivo predeterminado de inicio sera dado por un numero al principio (un mardito 0)
+def check_dataplayerjson():
     
-    DP_file = "./saved_games_f/0*.json"
-    if "./saved_games_f/*.json".exists():
+    DP_file = Path("./saved_games_f/*.json")
+    if DP_file.exists():
         dataplayer = get_data(namedatafile=DP_file)
         
-    if not os.path.exists(DP_file):
+    else:
 
         name = input("¡¡welcome player!!, please write your name and press ENTER\n")
         print("\x1b[10A\r\x1b[J", end="")

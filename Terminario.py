@@ -1,10 +1,30 @@
 import random
+from pynput import keyboard
+from pathlib import Path
 import keyboard
 import time
 import os
 import json
 from game_data import items, check_dataplayerjson
 dataplayer = check_dataplayerjson()
+
+def loadgame():
+    print("\x1b[10A\r\x1b[J", end="")
+    DP_file = input("enter the name of the game you want to load")
+    DP_file = Path("./saved_games_f/" + DP_file)
+    if str(DP_file)[-5:] != ".json":
+        DP_file = Path(str(DP_file) + ".json")
+    dataplayer = get_data(namedatafile=DP_file)
+    return dataplayer
+
+def savegame(dataplayer):
+    print("\x1b[10A\r\x1b[J", end="")
+    DP_file = input("enter a name for this game please:\n")
+    DP_file = Path("./saved_games_f/" + DP_file)
+    if str(DP_file)[-5:] != ".json":
+        DP_file = Path(str(DP_file) + ".json")
+
+    save_data(namedatafile=DP_file,savedata=dataplayer)
 
 def get_data(namedatafile):
     with open(namedatafile, "r") as file:
@@ -210,7 +230,11 @@ def start(dataplayer,items):
     brand3 = ""
     brands = [brand0, brand1, brand2, brand3]
     
+    read_key_m = True
+
+    listener = keyboard.Listener(on_press=)
     while True:        
+        
         for index, brand in enumerate(brands):
             brands[index] = ""
             if index == position:
@@ -222,33 +246,32 @@ def start(dataplayer,items):
               f"\n{brands[0]}[store]  {brands[1]}[play]  {brands[2]}[save]  {brands[3]}[load]") 
           
         time.sleep(0.2)
+        
         action = keyboard.read_key()
-   
+
         if action == "flecha derecha":
             if position == 3:
                 position = 0
             else:
                 position += 1
-
         elif action == "flecha izquierda":
             if position == 0:
                 position = 3
             else:
                 position -= 1
-
+        
         elif action == "enter" and position == 0:
             main_store(dataplayer = dataplayer, items=items)
-            
+        
         # * elif action == "enter" and position == 1:
             # ? aqui falta la funcion que ejecute el juego principal
-
+        
         elif action == "enter" and position == 2:
-            save_data(namedatafile="dataplayer.json",savedata=dataplayer)
+            savegame(dataplayer=dataplayer)
 
         elif action == "enter" and position == 3:
-            check_dataplayerjson()
+            loadgame()
             #como el programa va a usar los archivos de partidas guardadas por el jugador
-
 start(dataplayer=dataplayer, items=items)
 
 
